@@ -1,3 +1,8 @@
+/**
+ * @license
+ * @author Dhanasekaran
+ * 
+ */
 import {PolymerElement, html} from '@polymer/polymer/polymer-element.js';
 import { setPassiveTouchGestures, setRootPath } from '@polymer/polymer/lib/utils/settings.js';
 import '@polymer/app-layout/app-drawer/app-drawer.js';
@@ -11,6 +16,7 @@ import '@polymer/app-route/app-route.js';
 import '@polymer/iron-pages/iron-pages.js';
 import '@polymer/iron-selector/iron-selector.js';
 import '@polymer/paper-icon-button/paper-icon-button.js';
+import '@polymer/paper-toast/paper-toast.js';
 import './my-icons.js';
 import './login-form.js';
 
@@ -22,110 +28,156 @@ class HealthCare extends PolymerElement{
           :host {
             --app-primary-color: #4285f4;
             --app-secondary-color: black;
+            --app-white-color: white;
             display: block;
           }
-
-          app-drawer-layout:not([narrow]) [drawer-toggle] {
-            display: none;
+          .logo-main{
+            display: inherit;
           }
-
-          app-header {
-            color: #fff;
-            background-color: var(--app-primary-color);
-          }
-
-          app-header paper-icon-button {
-            --paper-icon-button-ink-color: white;
-          }
-
-          .drawer-list {
-            margin: 0 20px;
-          }
-
-          .drawer-list a {
-            display: block;
-            padding: 0 16px;
+          .logo-main a{
+            margin-left: 20px;
+            color: var(--app-white-color);
             text-decoration: none;
-            color: var(--app-secondary-color);
-            line-height: 40px;
+            font-size: 34px;
+            top: 15px;
+            position: relative;
           }
-
-          .drawer-list a.iron-selected {
-            color: black;
-            font-weight: bold;
-          }
+          /* Navigation Menu*/          
           app-header iron-selector a{
             display: inline-block !important;
           }
-
           app-header {
-            background-color: #4285f4;
+            background: linear-gradient(to right, #39b49a 0%, #1d86df 100%);
             color: #fff;
           }
-          app-header paper-icon-button {
-            --paper-icon-button-ink-color: #fff;
+          .drawer-list {
+            margin: 0 5px;
+            display: inline-block;
+            text-align: right;
+            width: 75%;
+            float: right;
           }
-          app-drawer-layout {
-            --app-drawer-layout-content-transition: margin 0.2s;
+          .drawer-list a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: var(--app-white-color);
+            line-height: 50px;
+            transition: all linear 300ms;
           }
-          app-drawer {
-            --app-drawer-content-container: {
-              background-color: #eee;
+          .drawer-list a:hover {
+            background: #ccc;
+            transition: all linear 300ms;
+          }
+          .drawer-list a.iron-selected {
+            color: black;
+            font-weight: bold;
+            background: #ccc;
+          }
+          .menu-toggle{
+            display: none;
+          }
+          footer{
+            background: linear-gradient(to right, #39b49a 0%, #1d86df 100%);
+            padding: 35px;
+            color: var(--app-white-color);
+            margin-top:30px;
+          }
+          @media (max-width:900px){
+            app-header{
+              display: none !important;
+            }
+            .menu-toggle{
+              display: block;
+            }
+            .drawer-list {
+              text-align: left;
+              margin: 0;
+              width:100%;
+            }
+            .drawer-list a {
+              color: var(--app-secondary-color);
             }
           }
-          .drawer-content {
-            margin-top: 80px;
-            height: calc(100% - 80px);
-            overflow: auto;
-          }
         </style>
+        <!-- App Location -->
         <app-location 
             route="{{route}}" 
             url-space-regex="^[[rootPath]]">
         </app-location>
-
+        <!-- App Route -->
         <app-route 
             route="{{route}}" 
             pattern="[[rootPath]]:page" 
             data="{{routeData}}" 
             tail="{{subroute}}">
         </app-route>
-          
-        <app-header-layout>
-          <!-- Main content -->
+        
+        <!-- App Drawer Layout starts -->
+        <app-drawer-layout force-narrow>
 
-            <app-header fixed effects="waterfall" slot="header">
-              <app-toolbar>
-                <paper-icon-button icon="my-icons:menu" drawer-toggle=""></paper-icon-button>
-                <div main-title=""><a href="[[rootPath]]">Health Care</a></div>
-                </app-toolbar>
+          <!-- App Drawer start -->
+          <app-drawer id="drawer" slot="drawer">            
+            <!-- Iron Selecctor Start -->
+            <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
+              <a name="home" href="[[rootPath]]home">Home Page</a>
+              <a name="services" href="[[rootPath]]services">Our Services</a>
+              <a name="doctors" href="[[rootPath]]doctors">Our Doctors</a>
+              <a name="appoinment" href="[[rootPath]]appoinment">Book Appoinment</a>
+              <a name="appoinmentview" href="[[rootPath]]appoinmentview">view Appoinment</a>
+              <a name="login" href="[[rootPath]]login">Login</a>
+            </iron-selector>
+            <!-- Iron Selecctor End -->
+          </app-drawer>
+          <!-- App Drawer End -->
+
+          <!-- App Header Layput start -->
+          <app-header-layout>
+            <!-- Toggle Menu -->
+            <app-toolbar class="menu-toggle">
+              <paper-icon-button icon="my-icons:menu" drawer-toggle=""></paper-icon-button>
+            </app-toolbar>
+            
+            <!-- App Header start -->
+            <app-header id="appheader" class="main-header" slot="header">
+              <!-- Header Logo -->
+              <app-toolbar class="logo-main">
+                <a href="[[rootPath]]">Health Care</a>
+              </app-toolbar>
+
+              <!-- Iron Selector start -->
+              <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
+                <a name="home" href="[[rootPath]]home">Home Page</a>
+                <a name="services" href="[[rootPath]]services">Our Services</a>
+                <a name="doctors" href="[[rootPath]]doctors">Our Doctors</a>
+                <a name="appoinment" href="[[rootPath]]appoinment">Book Appoinment</a>
+                <a name="login" on-click="logout">Logout</a>
+              </iron-selector>
+              <!-- Iron Selector End -->
             </app-header>
+            <!-- App Header End -->
 
+            <!-- Iron Page Start -->
             <iron-pages selected="[[page]]" attr-for-selected="name" role="main">
               <login-form name="login"></login-form>
               <home-page name="home"></home-page>
               <our-services name="services"></our-services>
               <our-doctors name="doctors"></our-doctors>
               <book-appoinment name="appoinment"></book-appoinment>
+              <appoinment-view name="appoinmentview"></appoinment-view>
+              <services-detail name="servicesdetail"></services-detail>
+              <doctor-details name="doctordetails"></doctor-details>
             </iron-pages>
-          <!-- Drawer content -->
-          <!-- Naviigation Start -->
-          <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
-            
-              <app-toolbar><div class="logo"><img src="images/logo-png.png" width="200" alt="UniqueHire" loading="lazy"></div>
-              </app-toolbar>
-              <!-- Iron Selecctor Start -->
-              <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-              <a name="home" href="[[rootPath]]home">Home Page</a>
-              <a name="services" href="[[rootPath]]services">Our Services</a>
-              <a name="doctors" href="[[rootPath]]doctors">Our Doctors</a>
-              <a name="login" href="[[rootPath]]login">Login</a>
-            </iron-selector>
-              <!-- Iron Selecctor End -->
-          </app-drawer>
-        </app-header-layout>
-        
-          
+            <!-- Iron Page End -->
+
+          </app-header-layout>
+          <!-- App Header Layout End -->
+        </app-drawer-layout>    
+        <!-- App Drawer Layout Ends -->
+        <paper-toast id="toast"></paper-toast>
+        <footer>
+          <p>© 2020 Lifecare. All Rights Reserved.</p>
+        </footer>
       `;
     }
     static get properties() {
@@ -147,12 +199,10 @@ class HealthCare extends PolymerElement{
     
     _routePageChanged(page) {
       // Show the corresponding page according to the route.
-      //
-      // If no page was found in the route data, page will be an empty string.
-      // Show 'view1' in that case. And if the page doesn't exist, show 'view404'.
+
       if (!page) {
           this.page = 'login';
-      } else if (['login', 'home', 'services', 'doctors', 'appoinment'].indexOf(page) !== -1) {
+      } else if (['login', 'home', 'services', 'doctors', 'appoinment','appoinmentview','servicesdetail','doctordetails'].indexOf(page) !== -1) {
           this.page = page;
       } else {
           this.page = 'view404';
@@ -162,19 +212,31 @@ class HealthCare extends PolymerElement{
       if (!this.$.drawer.persistent) {
           this.$.drawer.close();
       }
+      
     }
-    
+    logout(){
+      this. openToast();
+      localStorage.clear();
+      this.set('route.path', '/login');
+    }
+    openToast() {
+      this.$.toast.show({text: 'Sucessfully Logout', duration: 3000})
+    };
     _pageChanged(page) {
-      // Import the page component on demand.
-      //
-      // Note: `polymer build` doesn't like string concatenation in the import
-      // statement, so break it up.
+      /** 
+      * Import the page component on demand.
+      
+      * Note: `polymer build` doesn't like string concatenation in the import
+      * statement, so break it up.
+      **/
       switch (page) {
           case 'login':
               import('./login-form.js');
+              this.$.appheader.style.display="none";
               break;
           case 'home':
               import('./home-page.js');
+              this.$.appheader.style.display="block";
               break;
           case 'services':
               import('./our-services.js');
@@ -184,6 +246,15 @@ class HealthCare extends PolymerElement{
               break;
           case 'appoinment':
               import('./book-appoinment.js');
+              break;
+          case 'appoinmentview':
+              import('./appoinment-view.js');
+              break;
+          case 'servicesdetail':
+              import('./services-detail.js');
+              break;
+          case 'doctordetails':
+              import('./doctor-details.js');
               break;
       }
     }
