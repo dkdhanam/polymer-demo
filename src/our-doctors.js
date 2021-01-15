@@ -1,59 +1,24 @@
 /**
  * @license
  * @author Dhanasekaran
- * 
+ * import Polymer app-layout
+ * import Polymer iron-image
+ * import Polymer iron-ajax
  */
 
+// Import statements in Polymer 3.0 can now use package names.
+// polymer-element.js now exports PolymerElement instead of Element,
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/app-layout/app-layout.js';
-import './doctor-details.js';
+import '@polymer/iron-image/iron-image.js';
+import '@polymer/iron-ajax/iron-ajax.js';
+import './shared-styles.js';
 
-let doctorList = [
-  {
-    name: 'Dr. Juan Annato',
-    image: 'images/resource/team-1.jpg',
-    title: 'Pharmacist'
-  },
-  {
-    name: 'Dr. Jaffrin Skote',
-    image: 'images/resource/team-2.jpg',
-    title: 'Family Doctor'
-  },
-  {
-    name: 'Dr. Jonathon Deo',
-    image: 'images/resource/team-3.jpg',
-    title: 'Consulting Doctor'
-  },
-  {
-    name: 'Ira Membrit',
-    image: 'images/resource/team-4.jpg',
-    title: 'Surgeon'
-  },
-  {
-    name: 'Dr. JMaya Didas',
-    image: 'images/resource/team-5.jpg',
-    title: 'Nurse'
-  },
-  {
-    name: 'Dr. Buck Kinnear',
-    image:'images/resource/team-6.jpg',
-    title: 'Psychologist'
-  },
-  {
-    name: 'Dr. Shonda Leer',
-    image:'images/resource/team-7.jpg',
-    title: 'Cardiologists'
-  },
-  {
-    name: 'Surgical Services',
-    image: 'images/resource/team-8.jpg',
-    title: 'Dental Specialist'
-  }
-]
+// Define the new element as a class
 class doctors extends PolymerElement {
   static get template() {
     return html`
-    <style include="app-grid-style">
+    <style include="app-grid-style shared-styles">
 
     :host {
       --app-grid-columns: 4;
@@ -63,104 +28,68 @@ class doctors extends PolymerElement {
       --app-grid-expandible-item-columns: 2;
           --app-grid-item-height: auto;
     }
-    a{
-      text-decoration: none;
-      color: #000;
-    }
-    .app-grid {
-      padding: 0;
-      list-style: none;
-    }
-    .card{
-      padding: 10px;
-    }
-    .item {
-      background: var(--app-white-color);
-      box-shadow: 0 0 10px;
-    }
-    .center{
-      text-align: center;
-    }
-    .team-block{
-      position:relative;
-      margin-bottom:30px;
-    }
-
-    .team-block .inner-box{
-      position:relative;
-      overflow:hidden;
-      border-radius:10px;
-    }
-
-    .team-block .inner-box .image{
-      position:relative;
-    }
-
-    .team-block .inner-box .image img{
-      position:relative;
-      width:100%;
-      display:block;
-    }
-
+    iron-image {
+        width: 300px;
+        height: 300px;
+      }
     @media (max-width: 767px) {
       :host {
         --app-grid-columns: 1;
       }
     }
-  }
+    @media screen and (min-width:767px) and (max-width: 1024px){
+      :host {
+        --app-grid-columns: 2;
+      }
+    }
 
   </style>
 
-  <app-location 
-      route="{{route}}" 
-      url-space-regex="^[[rootPath]]">
-  </app-location>
-  <!-- App Route -->
-  <app-route 
-      route="{{route}}" 
-      pattern="[[rootPath]]:page" 
-      data="{{routeData}}" 
-      tail="{{subroute}}">
-  </app-route>
+  <!-- card starts here -->
   <div class="card">
-  <div class="page-title center">
-    <h3>Our Doctores</h3>
-    <p>Replenish him third creature and meat most of the blessed best of the void a fruit gathered.</p>
-  </div>     
-  <div class="app-grid">
-    <dom-repeat items="[[doctor]]">
-      <template strip-whitespace="">
-        
-          <div class="item center team-block">
-            <a href="/doctordetails">
-              <div class="inner-box"> 
-                <div class="image"> 
-                  <img src="[[item.image]]" alt="[[item.name]]"/>  
-                  <div class="overlay"> 
+    <div class="page-title center">
+      <h3>Our Doctores</h3>
+      <p>Replenish him third creature and meat most of the blessed best of the void a fruit gathered.</p>
+    </div> 
+    <!-- app grid starts here -->    
+    <div class="app-grid">
+      <!-- Iron ajax for fetching data from json file -->
+      <iron-ajax 
+          auto 
+          url="./src/doctors.json" 
+          handle-as="json"
+          last-response="{{users}}">
+      </iron-ajax>
+
+      <!-- dom repeat starts here -->
+      <dom-repeat items="[[users.doctorList]]">
+        <template strip-whitespace="">
+            <div class="item center team-block">
+                <div class="inner-box"> 
+                  <div class="image"> 
+
+                    <!-- using iron-image to show image-->
+                    <iron-image class="image" sizing = "contain" preload src="[[item.image]]"></iron-image>
+                    
                     <div class="content">     
-                    <h2>[[item.name]]</h2>
-                    <p>[[item.title]]</p>
-                  </div>
+                      <h2>[[item.name]]</h2>
+                      <p>[[item.title]]</p>
+                    </div>
                 </div>
-              </div>
-            </a>
-          </div>
-          
-        </template>
-      </dom-repeat>
-  </div>
-</div>  
+            </div>
+          </template>
+        </dom-repeat>
+        <!-- dom repeat ends here -->
+    </div>
+  </div>  
+  <!-- card ends here -->
     `;
   }
   static get properties() {
     return {
-      doctor: {
-        type: Array,
-        value: doctorList,
-        notify: true
-      },
+     
     };
   } 
 }
-
+// Register the element with the browser.
 window.customElements.define('our-doctors', doctors);

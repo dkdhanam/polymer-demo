@@ -1,111 +1,78 @@
 /**
  * @license
  * @author Dhanasekaran
- * 
+ * @class Healthcare
+ * import Polymer library and html function
+ * import Polymer app-drawer
+ * import Polymer app-drawer-layout
+ * import Polymer app-header
+ * import Polymer app-header-layout
+ * import Polymer app-toolbar
+ * import Polymer app-location
+ * import Polymer app-route
+ * import Polymer iron-pages
+ * import Polymer iron-selector
+ * import Polymer paper-icon-button
+ * import Polymer paper-toast
  */
+
+ // Import statements in Polymer 3.0 can now use package names.
+// polymer-element.js now exports PolymerElement instead of Element,
+
 import {PolymerElement, html} from '@polymer/polymer/polymer-element.js';
 import { setPassiveTouchGestures, setRootPath } from '@polymer/polymer/lib/utils/settings.js';
 import '@polymer/app-layout/app-drawer/app-drawer.js';
 import '@polymer/app-layout/app-drawer-layout/app-drawer-layout.js';
 import '@polymer/app-layout/app-header/app-header.js';
 import '@polymer/app-layout/app-header-layout/app-header-layout.js';
-import '@polymer/app-layout/app-scroll-effects/app-scroll-effects.js';
 import '@polymer/app-layout/app-toolbar/app-toolbar.js';
 import '@polymer/app-route/app-location.js';
 import '@polymer/app-route/app-route.js';
 import '@polymer/iron-pages/iron-pages.js';
 import '@polymer/iron-selector/iron-selector.js';
 import '@polymer/paper-icon-button/paper-icon-button.js';
+import '@polymer/iron-icon/iron-icon.js';
+import '@polymer/iron-icons/iron-icons.js';
 import '@polymer/paper-toast/paper-toast.js';
+import './shared-styles.js';
 import './my-icons.js';
-import './login-form.js';
 
+// Gesture events like tap and track generated from touch will not be
+// preventable, allowing for better scrolling performance.
+setPassiveTouchGestures(true);
+
+// Set Polymer's root path to the same value in `index.html`.
 setRootPath(MyAppGlobals.rootPath);
+
+// Define the new element as a class
 class HealthCare extends PolymerElement{
     static get template(){
+      /**
+        * Template getter must return an instance of HTMLTemplateElement.
+        * The html helper function makes this easy.
+      */
       return html`
-        <style>
-          :host {
-            --app-primary-color: #4285f4;
-            --app-secondary-color: black;
-            --app-white-color: white;
-            display: block;
-          }
-          .logo-main{
-            display: inherit;
-          }
-          .logo-main a{
-            margin-left: 20px;
-            color: var(--app-white-color);
-            text-decoration: none;
-            font-size: 34px;
-            top: 15px;
-            position: relative;
-          }
-          /* Navigation Menu*/          
-          app-header iron-selector a{
-            display: inline-block !important;
-          }
-          app-header {
-            background: linear-gradient(to right, #39b49a 0%, #1d86df 100%);
-            color: #fff;
-          }
-          .drawer-list {
-            margin: 0 5px;
-            display: inline-block;
-            text-align: right;
-            width: 75%;
-            float: right;
-          }
-          .drawer-list a {
-            display: block;
-            padding: 10px;
-            text-decoration: none;
-            color: var(--app-white-color);
-            line-height: 50px;
-            transition: all linear 300ms;
-          }
-          .drawer-list a:hover {
-            background: #ccc;
-            transition: all linear 300ms;
-          }
-          .drawer-list a.iron-selected {
-            color: black;
-            font-weight: bold;
-            background: #ccc;
-          }
-          .menu-toggle{
-            display: none;
-          }
-          footer{
-            background: linear-gradient(to right, #39b49a 0%, #1d86df 100%);
-            padding: 35px;
-            color: var(--app-white-color);
-            margin-top:30px;
-          }
-          @media (max-width:900px){
-            app-header{
-              display: none !important;
-            }
-            .menu-toggle{
+          <style include="shared-styles">
+            :host {
+              --app-primary-color: #4285f4;
+              --app-secondary-color: black;
+              --app-white-color: white;
               display: block;
             }
-            .drawer-list {
-              text-align: left;
-              margin: 0;
-              width:100%;
+            #contentContainer{
+              background: linear-gradient(to right, #39b49a 0%, #1d86df 100%);
             }
-            .drawer-list a {
-              color: var(--app-secondary-color);
-            }
-          }
-        </style>
-        <!-- App Location -->
+          </style>
+
+        <!-- app-location binds to the app's URL -->
+        <!-- app-location is an element that provides synchronization between th browser location and the state of  an app-->
         <app-location 
             route="{{route}}" 
             url-space-regex="^[[rootPath]]">
         </app-location>
-        <!-- App Route -->
+
+        <!-- this app-route manages the top-level routes -->
+        <!-- app-route implementation of routing-->
         <app-route 
             route="{{route}}" 
             pattern="[[rootPath]]:page" 
@@ -116,7 +83,7 @@ class HealthCare extends PolymerElement{
         <!-- App Drawer Layout starts -->
         <app-drawer-layout force-narrow>
 
-          <!-- App Drawer start -->
+          <!-- App Drawer for mobile menu start -->
           <app-drawer id="drawer" slot="drawer">            
             <!-- Iron Selecctor Start -->
             <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
@@ -136,13 +103,14 @@ class HealthCare extends PolymerElement{
             <!-- Toggle Menu -->
             <app-toolbar class="menu-toggle">
               <paper-icon-button icon="my-icons:menu" drawer-toggle=""></paper-icon-button>
+              <div class="mobile-logo"><a href="[[rootPath]]home">Health Care</a></div>
             </app-toolbar>
             
-            <!-- App Header start -->
+            <!-- App Header for Desktop view start -->
             <app-header id="appheader" class="main-header" slot="header">
               <!-- Header Logo -->
               <app-toolbar class="logo-main">
-                <a href="[[rootPath]]">Health Care</a>
+                <a href="[[rootPath]]home">Health Care</a>
               </app-toolbar>
 
               <!-- Iron Selector start -->
@@ -158,6 +126,11 @@ class HealthCare extends PolymerElement{
             <!-- App Header End -->
 
             <!-- Iron Page Start -->
+            <!-- iron-pages selects the view based on the active route -->
+            <!-- selected: Data binding helps to get changed page value -->
+            <!-- attr-for-selected: It reads value of name attr defined in each component & matches with selected value and triggers page switch -->
+            <!-- fallback-selection: for 404., page/component not found handling -->
+
             <iron-pages selected="[[page]]" attr-for-selected="name" role="main">
               <login-form name="login"></login-form>
               <home-page name="home"></home-page>
@@ -165,8 +138,6 @@ class HealthCare extends PolymerElement{
               <our-doctors name="doctors"></our-doctors>
               <book-appoinment name="appoinment"></book-appoinment>
               <appoinment-view name="appoinmentview"></appoinment-view>
-              <services-detail name="servicesdetail"></services-detail>
-              <doctor-details name="doctordetails"></doctor-details>
             </iron-pages>
             <!-- Iron Page End -->
 
@@ -180,17 +151,30 @@ class HealthCare extends PolymerElement{
         </footer>
       `;
     }
+    /* observer: Its a simple observer that triggers whenever data changed in page property. We read the observer and calls a function to grab its earlier */
     static get properties() {
       return {
+        // define a property
         page: {
           type: String,
+          // reflectToAttribute update the corresponding attribute when the property changes
           reflectToAttribute: true,
+          /**
+           * specify an observer to be invoked when the property changes
+           * In swicth case the Observer will observe the page is availabe or not
+            */ 
           observer: '_pageChanged'
         },
         routeData: Object,
         subroute: Object,
       };
     }    
+    /**
+     * Each item of observers array is a method name followed by
+     * a comma-separated list of one or more paths.
+     * Triggers when data changed in page property.
+      */ 
+    
     static get observers() {
       return [
         '_routePageChanged(routeData.page)'
@@ -199,13 +183,13 @@ class HealthCare extends PolymerElement{
     
     _routePageChanged(page) {
       // Show the corresponding page according to the route.
-
+      
       if (!page) {
           this.page = 'login';
-      } else if (['login', 'home', 'services', 'doctors', 'appoinment','appoinmentview','servicesdetail','doctordetails'].indexOf(page) !== -1) {
+      } else if (['login', 'home', 'services', 'doctors', 'appoinment','appoinmentview'].indexOf(page) !== -1) {
           this.page = page;
       } else {
-          this.page = 'view404';
+          this.page = 'home';
       }
 
       // Close a non-persistent drawer when the page & route are changed.
@@ -215,17 +199,20 @@ class HealthCare extends PolymerElement{
       
     }
     logout(){
+
+      // when user clicks logout clear localstorage and redirect to home page
       this. openToast();
       localStorage.clear();
       this.set('route.path', '/login');
     }
     openToast() {
+
+       // After click locgout we are showing tost message succesfully logut
       this.$.toast.show({text: 'Sucessfully Logout', duration: 3000})
     };
     _pageChanged(page) {
       /** 
-      * Import the page component on demand.
-      
+      * Import the page component on demand.      
       * Note: `polymer build` doesn't like string concatenation in the import
       * statement, so break it up.
       **/
@@ -250,13 +237,9 @@ class HealthCare extends PolymerElement{
           case 'appoinmentview':
               import('./appoinment-view.js');
               break;
-          case 'servicesdetail':
-              import('./services-detail.js');
-              break;
-          case 'doctordetails':
-              import('./doctor-details.js');
-              break;
       }
     }
 }
+
+// Register the element with the browser.
 window.customElements.define('healthcare-app', HealthCare);

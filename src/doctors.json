@@ -1,0 +1,85 @@
+{"doctorList":[
+  {
+    "name": "Dr. Juan Annato",
+    "image": "images/resource/team-1.jpg",
+    "title": "Pharmacist"
+  },
+  {
+    "name": "Dr. Jaffrin Skote",
+    "image": "images/resource/team-2.jpg",
+    "title": "Family Doctor"
+  },
+  {
+    "name": "Dr. Jonathon Deo",
+    "image": "images/resource/team-3.jpg",
+    "title": "Consulting Doctor"
+  },
+  {
+    "name": "Ira Membrit",
+    "image": "images/resource/team-4.jpg",
+    "title": "Surgeon"
+  },
+  {
+    "name": "Dr. JMaya Didas",
+    "image": "images/resource/team-5.jpg",
+    "title": "Nurse"
+  },
+  {
+    "name": "Dr. Buck Kinnear",
+    "image":"images/resource/team-6.jpg",
+    "title": "Psychologist"
+  },
+  {
+    "name": "Dr. Shonda Leer",
+    "image":"images/resource/team-7.jpg",
+    "title": "Cardiologists"
+  },
+  {
+    "name": "Surgical Services",
+    "image": "images/resource/team-8.jpg",
+    "title": "Dental Specialist"
+  }
+],
+"serviceList":[
+  {
+    "id"  : "01",
+    "name": "Physical therapy",
+    "title": "Replenish him third creature and meat blessed void a fruit gathered you’re behold had seed."
+  },
+  {
+    "id"  : "02",
+    "name": "Pediatric Services",
+    "title": "Replenish him third creature and meat blessed void a fruit gathered you’re behold had seed."
+  },
+  {
+    "id"  : "03",
+    "name": "Diagnostic Center",
+    "title": "Replenish him third creature and meat blessed void a fruit gathered you’re behold had seed."
+  },
+  {
+    "id"  : "04",
+    "name": "Healthcare Center",
+    "title": "Replenish him third creature and meat blessed void a fruit gathered you’re behold had seed."
+  },
+  {
+    "id"  : "05",
+    "name": "Neurology",
+    "title": "Replenish him third creature and meat blessed void a fruit gathered you’re behold had seed."
+  },
+  {
+    "id"  : "06",
+    "name": "Neurosurgery",
+    "title": "Replenish him third creature and meat blessed void a fruit gathered you’re behold had seed."
+  },
+  {
+    "id"  : "07",
+    "name": "Orthopaedics",
+    "title": "Replenish him third creature and meat blessed void a fruit gathered you’re behold had seed."
+  },
+  {
+    "id"  : "08",
+    "name": "Surgical Services",
+    "title": "Replenish him third creature and meat blessed void a fruit gathered you’re behold had seed."
+  }
+]
+}

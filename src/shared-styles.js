@@ -4,213 +4,283 @@ const $_documentContainer = document.createElement('template');
 $_documentContainer.innerHTML = `<dom-module id="shared-styles">
   <template>
     <style>
-    h1{
-      font-size: 22px !important;
+    :host {
+      --app-primary-color: #4285f4;
+      --app-secondary-color: black;
+      --app-white-color: white;
     }
+    .logo-main{
+        display: inherit;
+      }
+      .logo-main a{
+        margin-left: 20px;
+        color: var(--app-white-color);
+        text-decoration: none;
+        font-size: 34px;
+        top: 15px;
+        position: relative;
+      }
+      /* Navigation Menu*/          
+      app-header iron-selector a{
+        display: inline-block !important;
+      }
+      app-header {
+        background: linear-gradient(to right, #39b49a 0%, #1d86df 100%);
+        color: #fff;
+      }
+      .drawer-list {
+        margin: 0 5px;
+        display: inline-block;
+        text-align: right;
+        width: 75%;
+        float: right;
+      }
+      .drawer-list a {
+        display: block;
+        padding: 10px;
+        text-decoration: none;
+        color: var(--app-white-color);
+        line-height: 50px;
+        transition: all linear 300ms;
+      }
+      .drawer-list a:hover {
+        background: #ccc;
+        transition: all linear 300ms;
+      }
+      .drawer-list a.iron-selected {
+        color: black;
+        font-weight: bold;
+        background: #ccc;
+      }
+      .menu-toggle{
+        display: none;
+      }
+      footer{
+        background: linear-gradient(to right, #39b49a 0%, #1d86df 100%);
+        padding: 35px;
+        color: var(--app-white-color);
+        margin-top:30px;
+      }
 
-    app-drawer-layout:not([narrow]) [drawer-toggle] {
-      display: none;
-    }
+      /*Login page*/
 
-    app-header {
-
-      color: #fff;
-      background-color: var(--app-primary-color);
-    }
-    @media only screen and (min-width: 640px) {
-        app-header{
-            display: none;
+       
+        .center {
+          width:100%;
+          text-align:center;
         }
-    }
+        .errmsg{
+          color:red;
+          margin: 4px;
+        }
+        #mylogin paper-card{
+          width:37%;
+          display:inline-block;
+          margin-top: 12%;
+          border-radius: 20px;
+          box-shadow: 0px 0px 20px #ccc;
+          padding: 25px;
+        }
+        #mylogin{
+          background: linear-gradient(to right, #39b49a 0%, #1d86df 100%);
+          width:100%;
+          position:fixed;
+          left:0;
+          margin: 0 auto;
+          height: 100%;
+          top:0;
+        }
+       
+      /* Home page */
 
-    app-header paper-icon-button {
-      --paper-icon-button-ink-color: white;
-    }
-    .drawer-list {
-      margin: 0 20px;
-    }
-
-    .drawer-list a {
-      display: block;
-      text-decoration: none;
-      color: var(--app-secondary-color);
-      line-height: 40px;
+      .app-grid > *{
+        text-align: center;
+      }
+      .services-section h2, .doctors-section h2, .about-section .page-title{
+        text-align: center;
+      }
+      .container{
+        max-width:1200px;
+        margin:0 auto;
+      }
+      .width-100{
+        width:100%;
+      }
+      .home-content{
+        position: absolute;
+        top: 13%;
+        text-align: center;
+        width:100%;
+      }
+      .section-1{
+        color: #000;
+        width:100%;
+        text-align: center;
+      }
       
+      /* Appoinment Page */
+
+
+      #appoinment-form paper-card{
+        display:inline-block;
+        margin-top: 3%;
+        width:100%;
+      }
+      .content-title{
+        background: linear-gradient(to right, #39b49a 0%, #1d86df 100%);
+        padding:10px;
+        color: #fff;
+      }
+      #dropdown{
+        position: absolute !important;
+        left: 0 !important;
+        top:0 !important;
+      }
+      
+      paper-dropdown-menu {
+        --paper-dropdown-menu: {
+          left:0 !important;
+          width:100% !important;
+        } 
+    }
+      
+      /* Appoinment View */
+
+      
+      .content-title{
+        background: linear-gradient(to right, #39b49a 0%, #1d86df 100%);
+        padding:10px;
+        color: #fff;
+      }
+      vaadin-time-picker{
+        width:100%;
+      }
+      vaadin-combo-box-light{
+        width: 100%;
+      }
+      vaadin-time-picker-text-field{
+        width: 100%;
+      }
+      .vaadin-text-field-container [part="input-field"]{
+        background: #fff;
+      }
+
+    /* Our Services */
+
+    a{
+      text-decoration: none;
+      color: #000;
+    }
+    .app-grid {
+      padding: 0;
+      list-style: none;
+    }
+    .card{
+      padding: 10px;
+    }
+    
+    .center{
+      text-align: center;
+    }
+    .number-box {
+      margin: 0 auto;
+      width: 65px;
+    }
+    .number-box .number{
+      position: relative;
+      width: 52px;
+      height: 52px;
+      padding: 3px;
+      color: #ffffff;
+      font-size: 14px;
+      line-height: 26px;
+      border-radius: 50px;
+      margin: 4px 3px 3px 4px;
+      border: 11px solid #cfd2fc;
+      background-color: #5153ff;
+      text-align: center;
+    }
+    .number-box .number span{
+      position: relative;
+      top: 12px;
+    }
+    
+
+    /* Our Doctors */
+
+    .team-block{
+      position:relative;
+      margin-bottom:30px;
+    }
+    .team-block .inner-box{
+      position:relative;
+      overflow:hidden;
+      border-radius:10px;
+      border: 1px solid;
+      background: #fff;
+    }
+    .team-block .inner-box .image{
+      position:relative;
+    }
+    .team-block .inner-box .image img{
+      position:relative;
+      width:100%;
+      display:block;
     }
 
-    .drawer-list a.iron-selected {
-      color: #fff;
-      font-weight: bold;
+    @media screen and (min-width:767px) and (max-width: 1024px){
+      :host {
+        --app-grid-columns: 2;
+      }
+      .logo-main a{
+        margin-left: 15px;
+      }
     }
-    app-drawer {
-        --app-drawer-scrim-background: rgba(0, 0, 100, 0.8);
+    /* screen lessthan 767px width */
 
-        --app-drawer-content-container: {
-          background-color: #673AB7;
-        }
+    @media (max-width: 767px){
+      :host {
+        --app-grid-columns: 1;
+      }
+      .mobile-logo{
+        text-align: center;
+        display: inline-block;
+        width: 75%;
+        margin-top: 15px;
+        position: absolute;
         
       }
-      .logo img{
-        margin-top:20px;
-    }
-    .mobile-logo img{
-      margin-top:7px;
-  }
-    
-    .drawer-list a.iron-selected {
-      background: #8d5ce4;
-  }
-  .drawer-list a {
-    color: #fff;
-    padding: 11px 27px;
-    border-bottom: 1px solid #5c30ab;
-    font-size: 18px;
-    font-weight: normal !important;
-  }
-    .drawer-list a:hover {
-      background: #8d5ce4;
-  }
-  footer.card {
-    margin: 0px 34px 0px;
-    padding: 1px 28px;
-    color: #757575;
-    border-radius: 5px;
-    background-color: #fff;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
-  }
-  footer p a{
-    text-decoration: none;
-
-  }
-    .clr1, .clr2, .clr3, .clr4{
-      border-radius: 5px;
-      color: #fff;
-      display: flex;
-      justify-content: space-between;
-      padding: 15px;
-      margin-bottom: 10px;
-  }
-  .clr1 p, .clr2 p, .clr3 p, .clr4 p{
-    margin: 7px 0px 0px !important;
-}
-  .clr1 span, .clr2 span, .clr3 span, .clr4 span {
-      font-size: 25px;
-  }
-  .clr1{
-      background-image: linear-gradient(-20deg, #2b5876 0%, #4e4376 100%) !important
-  }
-  .clr2{
-      background-image: radial-gradient(circle 248px at center, #16d9e3 0%, #30c7ec 47%, #46aef7 100%) !important;
-  }
-  .clr3{
-      background-image: linear-gradient(to top, #0ba360 0%, #3cba92 100%) !important;
-  }
-  .clr4{
-      background-image: linear-gradient(to right, #434343 0%, black 100%) !important;
-  }
-      .card {
-        margin: 24px;
-        padding: 16px;
-        color: #757575;
-        border-radius: 5px;
-        background-color: #fff;
-        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
-      }
-
-      .circle {
-        display: inline-block;
-        width: 64px;
-        height: 64px;
-        text-align: center;
-        color: #555;
-        border-radius: 50%;
-        background: #ddd;
+      .mobile-logo a{
         font-size: 30px;
-        line-height: 64px;
+        color: #fff;
+      }
+      #drawer .drawer-list{
+        background: linear-gradient(to right, #39b49a 0%, #1d86df 100%);
+      }
+      app-header{
+        display: none !important;
+      }
+      .menu-toggle{
+        display: block;
+        background: linear-gradient(to right, #39b49a 0%, #1d86df 100%);
+        color: #fff;
+      }
+      .drawer-list {
+        text-align: left;
+        margin: 0;
+        width:100%;
+      }
+      .drawer-list a {
+        color: var(--app-white-color);
+      }
+      #mylogin paper-card{
+        width:80%;
+        margin-top: 30%;
+      }
+      #appoinment-form paper-card{
+        width: 90%;
       }
 
-      h1 {
-        margin: 16px 0 !important;
-        color: #212121;
-        line-height: 0 !important;
-        font-weight: 400 !important;
-        font-size: 22px !important;
-      }
-      .mdl-data-table td, .mdl-data-table th {
-        padding: 12px 14px !important;
-        border: 1px solid #ccc !important;
-      }
-      .mdl-data-table th {
-        background: #343a40;
-        color: #fff !important;
-      }
-      
-      .table-responsive {
-        min-height: .01%;
-        overflow-x: auto;
-        width: 100%;
-        display: grid;
-    }
-    @media screen and (max-width: 767px) {
-        .table-responsive {
-            width: 100%;
-            margin-bottom: 15px;
-            overflow-y: hidden;
-            -ms-overflow-style: -ms-autohiding-scrollbar;
-            border: 1px solid #ddd;
-        }
-        .table-responsive > .table {
-            margin-bottom: 0;
-        }
-        .table-responsive > .table > thead > tr > th,
-        .table-responsive > .table > tbody > tr > th,
-        .table-responsive > .table > tfoot > tr > th,
-        .table-responsive > .table > thead > tr > td,
-        .table-responsive > .table > tbody > tr > td,
-        .table-responsive > .table > tfoot > tr > td {
-            white-space: nowrap;
-        }
-        .table-responsive > .table-bordered {
-            border: 0;
-        }
-        .table-responsive > .table-bordered > thead > tr > th:first-child,
-        .table-responsive > .table-bordered > tbody > tr > th:first-child,
-        .table-responsive > .table-bordered > tfoot > tr > th:first-child,
-        .table-responsive > .table-bordered > thead > tr > td:first-child,
-        .table-responsive > .table-bordered > tbody > tr > td:first-child,
-        .table-responsive > .table-bordered > tfoot > tr > td:first-child {
-            border-left: 0;
-        }
-        .table-responsive > .table-bordered > thead > tr > th:last-child,
-        .table-responsive > .table-bordered > tbody > tr > th:last-child,
-        .table-responsive > .table-bordered > tfoot > tr > th:last-child,
-        .table-responsive > .table-bordered > thead > tr > td:last-child,
-        .table-responsive > .table-bordered > tbody > tr > td:last-child,
-        .table-responsive > .table-bordered > tfoot > tr > td:last-child {
-            border-right: 0;
-        }
-        .table-responsive > .table-bordered > tbody > tr:last-child > th,
-        .table-responsive > .table-bordered > tfoot > tr:last-child > th,
-        .table-responsive > .table-bordered > tbody > tr:last-child > td,
-        .table-responsive > .table-bordered > tfoot > tr:last-child > td {
-            border-bottom: 0;
-        }
-    }
-    input{
-      padding: 11px 5px;
-      border-radius: 5px;
-      width: 95%;
-      border: 1px solid #ccc;
-      outline: none;
-    }
-    .btn {
-      width: 200px;
-    }
-    .btn:hover {
-      background: #673ab7;
-      color: #fff;
-      display: block;
-      text-align: center;
     }
     </style>
   </template>

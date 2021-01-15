@@ -1,18 +1,31 @@
 {
   "name": "polymer-project",
   "dependencies": {
+    "@cwmr/paper-search": "^3.0.1",
     "@elifent/paper-datepicker": "^3.0.4",
+    "@fluidnext-polymer/paper-grid": "^3.0.4",
+    "@myfrom/paper-calendar": "^0.3.0",
     "@polymer/app-layout": "^3.1.0",
     "@polymer/app-route": "^3.0.2",
+    "@polymer/iron-form": "^3.0.1",
     "@polymer/iron-iconset": "^3.0.1",
     "@polymer/iron-iconset-svg": "^3.0.1",
+    "@polymer/iron-image": "^3.0.2",
+    "@polymer/iron-media-query": "^3.0.1",
     "@polymer/iron-pages": "^3.0.1",
     "@polymer/paper-button": "^3.0.1",
     "@polymer/paper-card": "^3.0.1",
+    "@polymer/paper-dropdown-menu": "^3.1.0",
     "@polymer/paper-icon-button": "^3.0.2",
     "@polymer/paper-input": "^3.2.1",
+    "@polymer/paper-item": "^3.0.1",
     "@polymer/paper-listbox": "^3.0.1",
-    "@polymer/polymer": "^3.0.0"
+    "@polymer/paper-material": "^3.0.1",
+    "@polymer/paper-spinner": "^3.0.2",
+    "@polymer/paper-tabs": "^3.1.0",
+    "@polymer/paper-toast": "^3.0.1",
+    "@polymer/polymer": "^3.0.0",
+    "@vaadin/vaadin-time-picker": "^2.4.0"
   },
   "devDependencies": {
     "@polymer/test-fixture": "^4.0.2",

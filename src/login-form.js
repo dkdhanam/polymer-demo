@@ -1,95 +1,89 @@
 /**
  * @license
  * @author Dhanasekaran
- * 
+ * import Polymer paper-input
+ * import Polymer paper-button
+ * import Polymer paper-card
+ * import Polymer iron-form
  */
+
+// Import statements in Polymer 3.0 can now use package names.
+// polymer-element.js now exports PolymerElement instead of Element,
 
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/paper-input/paper-input.js';
 import '@polymer/paper-button/paper-button.js';
 import '@polymer/paper-card/paper-card.js';
 import '@polymer/iron-form/iron-form.js';
+import './shared-styles.js';
 
+// Define the new element as a class
 class Login extends PolymerElement {
-  /* Properties */
+
+  // creating Properties 
   static get properties () {
     return {
+      //username value
       username:{
         type: String,
         notify: true
       },
+      // password value
       password:{
         type: String,
         notify: true
       },
+      // response is get the form data from iron-onResponse
       response: {
         type: String,
        observer:'validators'
-    },
-    errorMessage:{
-      type: String,
-      value:"required",
-      notify: true,
-    },
+      },
+      // paper input errormessage
+      errorMessage:{
+        type: String,
+        value:"required",
+        notify: true,
+      },
     }
   }
+
+  //creating templates
   static get template() {
     return html`
-      <style>
+      <style include="shared-styles">
         iron-pages{
         display:none !important;
         }
-        .center {
-          width:100%;
-          text-align:center;
-        }
-        .errmsg{
-          color:red;
-          margin: 4px;
-        }
-        #mylogin paper-card{
-          width:37%;
-          display:inline-block;
-          margin-top: 12%;
-          border-radius: 20px;
-          box-shadow: 0px 0px 20px #ccc;
-          padding: 25px;
-        }
-        #mylogin{
-          background: linear-gradient(to right, #39b49a 0%, #1d86df 100%);
-          width:100%;
-          position:fixed;
-          left:0;
-          margin: 0 auto;
-          height: 100%;
-          top:0;
-        }
-        @media (max-width: 767px){
-          #mylogin paper-card{
-            width:80%;
-            margin-top: 30%;
-          }
-        }
+        
       </style>
-    
+      <!-- app-location binds to the app's URL -->
+      <!-- app-location is an element that provides synchronization between th browser location and the state of  an app-->
       <app-location 
           route="{{route}}" 
           url-space-regex="^[[rootPath]]">
       </app-location>
 
+      <!-- this app-route manages the top-level routes -->
+      <!-- app-route implementation of routing-->
       <app-route 
           route="{{route}}" 
           pattern="[[rootPath]]:page" 
           data="{{routeData}}" 
           tail="{{subroute}}">
       </app-route>
+      
+      <!-- Paper toast used to show the form submiting message -->
       <paper-toast id="toast"></paper-toast>
       <div class="center" id="mylogin">
+      <!-- paper-card starts here -->
         <paper-card class="rate">
+          <h2 class="center" style="margin: 0;">Login</h2>
           <div class="card-content">
-          <div class="errmsg">
-                <small>{{errorMsg}}</small>
-                </div>
+            <!-- error message shows here -->
+            <div class="errmsg">
+              <small>{{errorMsg}}</small>
+            </div>
+            <!-- Iron form starts here -->
             <iron-form id="formOne" on-iron-form-response="onResponse">
               <form>
                 <paper-input maxlength="15" error-message="{{errorMessage}}" name="username" auto-validate required  float-label label="Username" value={{username}}></paper-input>
@@ -99,9 +93,10 @@ class Login extends PolymerElement {
               </div>
                 </form>
               </iron-form>
-          </div>
-          
+              <!-- Iron form ends here -->
+          </div>          
         </paper-card>
+        <!-- paper card ends here -->
       </div>
     `;
   }
@@ -110,25 +105,35 @@ class Login extends PolymerElement {
   _login() {
     this.$.formOne.submit();
   }
+
+  // get data from iron form
   onResponse(){
     if(this.username != 'dhana' || this.password != 'dhana'){
       this.errorMsg = "Invalid credentials";
 
     }else{
       this.errorMsg = "";
+      // credentials store the data to localstorage
       localStorage.setItem('credentials', this.username);
       localStorage.setItem('password', this.password);
+
+      // open the toast message when submit is Success
       this.openToast();
+
+      // after submit the form then reset the form 
       this.$.formOne.reset();
       setTimeout(()=> {
+        // when the form is submitted then route is redirect home page
         this.set('route.path', '/home');
       }, 1000);
     }
    
   }
+
+  // open the toast message when submit is Success
   openToast() {
     this.$.toast.show({text: 'Sucessfully Login', duration: 3000})
   }
 }
-
+// Register the element with the browser.
 window.customElements.define('login-form', Login);
