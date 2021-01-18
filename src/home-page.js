@@ -36,7 +36,7 @@ class HomePage extends PolymerElement {
 
     <!-- Home page Top Banner -->
     <section style="position:relative;">
-      <img class="width-100" src="images/slider-bg.png">
+      <img class="width-100" src="images/slider-bg.jpg">
       <div class="home-content">
         <img src="images/logo-1.png" width="50px">
         <h2>Welcome To Life Care We Care Your Health</h2>

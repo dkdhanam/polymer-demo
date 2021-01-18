@@ -46,6 +46,15 @@ class AppoinmentView extends PolymerElement {
             border-radius: 4px;
             box-shadow: 0 0 10px;
         }
+        table{
+            margin: 0 auto;
+            width:400px;
+        }
+        @media (max-width:767px){
+            table{
+                width:100%;
+            }
+        }
         </style>
         <!-- include the paper spinner-->
         <paper-spinner active="[[waiting]]"></paper-spinner>
@@ -56,14 +65,29 @@ class AppoinmentView extends PolymerElement {
             <!-- Booking view details with using dom-repeat -->
             <dom-repeat items="{{bookingData}}">
                 <template>
-                    <p>Name: <span>[[item.username]]</span></p>
-                    <p>Email: <span>[[item.email]]</span></p> 
-                    <p>Phone Number: <span>[[item.phone]]</span></p>  
-                    <p>Date: <span>[[item.date]]</span></p>
-                    <p>Services: <span>[[item.service]]</span></p> 
-                    <p>Doctor: <span>{{item.doctor}}</span></p> 
-                    <p>Time: <span>[[item.time]]</span></p> 
-                    
+                    <table>
+                    <tr>
+                    <td>Name </td><td>[[item.username]]</td>
+                    </tr>
+                    <tr>
+                    <td>Email </td><td>[[item.email]]</td> 
+                    </tr>
+                    <tr>
+                    <td>Phone Number </td><td>[[item.phone]]</td>
+                    </tr>
+                    <tr>  
+                    <td>Date </td><td>[[item.date]]</td>
+                    </tr>
+                    <tr>
+                    <td>Services </td><td>[[item.service]]</td> 
+                    </tr>
+                    <tr>
+                    <td>Doctor </td><td>{{item.doctor}}</td> 
+                    </tr>
+                    <tr>
+                    <td>Time </td><td>[[item.time]]</td>
+                    </tr> 
+                    <table>
                     <!-- successfully submited message showing here -->
                     <div class="center">
                         <h3>Successfully Submitted!<h3>
@@ -81,7 +105,7 @@ class AppoinmentView extends PolymerElement {
         setTimeout(()=> {
             this.waiting =false;
           }, 2000);
-    }
+    } 
 
     // Booking details fectching data from localstorage
     _appoinmentView(){

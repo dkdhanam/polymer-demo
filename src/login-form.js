@@ -25,13 +25,11 @@ class Login extends PolymerElement {
     return {
       //username value
       username:{
-        type: String,
-        notify: true
+        type: String
       },
       // password value
       password:{
-        type: String,
-        notify: true
+        type: String
       },
       // response is get the form data from iron-onResponse
       response: {
@@ -43,7 +41,7 @@ class Login extends PolymerElement {
         type: String,
         value:"required",
         notify: true,
-      },
+      }
     }
   }
 
@@ -89,7 +87,7 @@ class Login extends PolymerElement {
                 <paper-input maxlength="15" error-message="{{errorMessage}}" name="username" auto-validate required  float-label label="Username" value={{username}}></paper-input>
                 <paper-input maxlength="10" type="password" auto-validate required error-message="{{errorMessage}}" name="password" float-label label="Password" value={{password}}></paper-input>
                 <div class="card-actions">
-                <paper-button raised on-tap="_login" class="indigo" style="background:green;color:#fff;width:100%;margin-top: 20px;">Login</paper-button>
+                <paper-button raised on-tap="_login" class="indigo" style="background:green;color:#fff;width:100%;margin-top: 20px;margin-left:0;">Login</paper-button>
               </div>
                 </form>
               </iron-form>

@@ -5,13 +5,13 @@
  * import Polymer paper-input
  * import Polymer paper-button
  * import Polymer paper-card
- * import Polymer paper-datepicker
  * import Polymer paper-dropdown-menu
  * import Polymer paper-listbox
  * import Polymer paper-icon-button
  * import Polymer iron-form
  * import Polymer paper-toast
  * import vaadin vaadin-time-picker
+ * import vaadin vaadin-date-picker
  */
 
 // Import statements in Polymer 3.0 can now use package names.
@@ -22,7 +22,6 @@ import '@polymer/app-layout/app-layout.js';
 import '@polymer/paper-input/paper-input.js';
 import '@polymer/paper-button/paper-button.js';
 import '@polymer/paper-card/paper-card.js';
-import "@elifent/paper-datepicker/paper-datepicker.js";
 import '@polymer/paper-dropdown-menu/paper-dropdown-menu.js';
 import '@polymer/paper-item/paper-item.js';
 import '@polymer/paper-listbox/paper-listbox.js';
@@ -30,6 +29,8 @@ import '@polymer/paper-icon-button/paper-icon-button.js';
 import '@polymer/iron-form/iron-form.js';
 import '@polymer/paper-toast/paper-toast.js';
 import '@vaadin/vaadin-time-picker/vaadin-time-picker.js';
+import '@vaadin/vaadin-date-picker/vaadin-date-picker.js';
+
 import './shared-styles.js';
 
 // Define the new element as a class
@@ -40,6 +41,9 @@ class Appoinment extends PolymerElement {
       <style include="shared-styles app-grid-style"> 
           :host {
             --app-grid-columns: 2;
+          }
+          :host([has-label]){
+            paddint-top: 0;
           }
         .card-content{
           border-radius: 4px;
@@ -53,6 +57,12 @@ class Appoinment extends PolymerElement {
         }
         .service-time ul li{
             list-style: none;
+        }
+        vaadin-date-picker{
+          width:100%;
+        }
+        vaadin-time-picker-text-field{
+          padding-top: 0;
         }
         @media (max-width: 1024px){
           :host {
@@ -139,8 +149,8 @@ class Appoinment extends PolymerElement {
 
                     <!-- category services Dropdown -->
                     <div>
-                    <paper-dropdown-menu label="Select Service" class="custom" auto-validate required error-message="Please Select Service ">
-                      <paper-listbox slot="dropdown-content" name="Service" id="service" attr-for-selected="value"   class="dropdown-content  custom" horizontalAlign='left'>
+                    <paper-dropdown-menu label="Select Service" id="servicelist" class="custom" auto-validate required error-message="Please Select Service ">
+                      <paper-listbox slot="dropdown-content" selected='{{selectedserviceIndex}}' name="Service" id="service" attr-for-selected="value"   class="dropdown-content  custom" horizontalAlign='left'>
                         <paper-item value="Physical therapy">Physical therapy</paper-item>
                         <paper-item value="Pediatric Services">Pediatric Services</paper-item>
                         <paper-item value="Diagnostic Center">Diagnostic Center</paper-item>
@@ -153,8 +163,8 @@ class Appoinment extends PolymerElement {
 
                     <!-- category Doctors Dropdown -->
                     <div>
-                      <paper-dropdown-menu label="Select Doctors" class="custom" auto-validate required error-message="Please Select Service ">
-                        <paper-listbox slot="dropdown-content" name="Service" id="doctor" attr-for-selected="value"   class="dropdown-content  custom" horizontalAlign='left'>
+                      <paper-dropdown-menu label="Select Doctors" id="doctorslist" class="custom" auto-validate required error-message="Please Select Doctors ">
+                        <paper-listbox slot="dropdown-content" selected='{{selecteddoctorIndex}}' name="doctor" id="doctor" attr-for-selected="value"  class="dropdown-content  custom" horizontalAlign='left'>
                           <paper-item value="Dr. Juan Annato">Dr. Juan Annato</paper-item>
                           <paper-item value="Dr. Jaffrin Skote">Dr. Jaffrin Skote</paper-item>
                           <paper-item value="Dr. Jonathon Deo">Dr. Jonathon Deo</paper-item>
@@ -166,42 +176,67 @@ class Appoinment extends PolymerElement {
                     </div>
 
                     <!-- Dater Picker paper input -->
-                    <paper-input label="Select Date" value="{{demoDate}}" auto-validate error-message="Select Date">
+                    <!--<paper-input label="Select Date" value="{{demoDate}}" auto-validate error-message="Select Date">
                       <paper-icon-button
                         slot="suffix"
                         icon="date-range"
                         on-click="openDateBox">
                       </paper-icon-button>
                     </paper-input>
-                    <paper-datepicker opened="{{opened}}" date="{{demoDate}}" auto-validate error-message="Select Date"></paper-datepicker>
+                   <paper-datepicker opened="{{opened}}" date="{{demoDate}}" auto-validate error-message="Select Date"></paper-datepicker>-->
                    
+                   <!-- Dater Picker paper input -->
+                   <vaadin-date-picker 
+                      label="Select Date" 
+                      value={{date}}
+                      required 
+                      error-message="Select Date">
+                      </vaadin-date-picker>
                     <!-- Time Picker -->
-                    <vaadin-time-picker label="Select Time" auto-validate value={{time}} required error-message="Select time"></vaadin-time-picker>
+                    <vaadin-time-picker
+                      label="Select Time" 
+                      auto-validate 
+                      value={{time}} 
+                      required 
+                      error-message="Select time">
+                      </vaadin-time-picker>
+                    <time-picker value="{{value}}"></time-picker>
                     <div class="card-actions">
-                      <paper-button raised class="custom indigo"  on-tap="submitHandler" style="background:green;color:#fff;width:100%">Submit</paper-button>
+                      <paper-button raised class="custom indigo"  on-tap="submitHandler" style="background:green;color:#fff;width:100%;margin:20px 0;">Submit</paper-button>
                     </div>
                   </form>
                 </iron-form>
-                <-- Iron form end here -->
+                <!-- Iron form end here -->
               </div>
             </paper-card>
             <!-- paper card ends here -->
 
             <!-- paper toast message -->
+         
             <paper-toast id="toast"></paper-toast>
           </div>
           
         </div>
-      </div>    
+      </div>  
     `;
   }
 
    // creating properties 
   static get properties () {
     return {
-      // sourceData object is get form data from the iron-form
+      // patientData object is get form data from the iron-form
       patientData: {
         type:Object
+      },
+      // selectedserviceIndex properties to get the dropdown selected value
+      selectedserviceIndex: {
+        type: Boolean,
+        observer: '_selectedIndexChanged_s'
+      },
+      // selecteddoctorIndex properties to get the dropdown selected value
+      selecteddoctorIndex: {
+        type: Boolean,
+        observer: '_selectedIndexChanged_d'
       }
     }
   }
@@ -212,8 +247,9 @@ class Appoinment extends PolymerElement {
    */
   ready() {
     // If you override ready, always call super.ready() first.
-    super.ready();
+    super.ready();    
   }
+  
   // use to open the datepicker popup
   openDateBox() {
     this.opened = true;
@@ -222,12 +258,28 @@ class Appoinment extends PolymerElement {
   submitHandler() {
     this.$.formOne.submit();
   }
+  // _selectedIndexChanged_s for services dropdown validation 
+  _selectedIndexChanged_s(){
+    var service = this.$.service.selected;
+    if(service = true){
+      this.$.servicelist.errorMessage = "";
+      this.$.servicelist.removeAttribute('invalid');
+    }
+  }
+  // _selectedIndexChanged_d for services dropdown validation
+  _selectedIndexChanged_d(){
+    var doctor = this.$.doctor.selected;
+    if(doctor = true){
+      this.$.doctorslist.errorMessage = "";
+      this.$.doctorslist.removeAttribute('invalid');
+    }
+  }
   // get data from iron form
   onResponse() {
     this.patientData = {
       username : this.patientName,
       email: this.email,
-      date : this.demoDate,
+      date : this.date,
       phone : this.phonenumber,
       service : this.$.service.selected,
       doctor : this.$.doctor.selected,
@@ -235,14 +287,16 @@ class Appoinment extends PolymerElement {
     }
     //patientData values to store the localstorage
     localStorage.setItem('bookingData',JSON.stringify(this.patientData));
-
+    this.openToast();
     // when the form is submitted then route is redirect appoinmentview page
     this.set('route.path', '/appoinmentview');
 
     // after submit the form then reset the form 
     this.$.formOne.reset();
   } 
-  
+  openToast() {
+    this.$.toast.show({text: 'Sucessfully Submitted', duration: 3000})
+  }
 }
 // Register the element with the browser.
 window.customElements.define('book-appoinment', Appoinment);

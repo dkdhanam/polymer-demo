@@ -92,7 +92,7 @@ class HealthCare extends PolymerElement{
               <a name="doctors" href="[[rootPath]]doctors">Our Doctors</a>
               <a name="appoinment" href="[[rootPath]]appoinment">Book Appoinment</a>
               <a name="appoinmentview" href="[[rootPath]]appoinmentview">view Appoinment</a>
-              <a name="login" href="[[rootPath]]login">Login</a>
+              <a name="login" href="[[rootPath]]login">Logout</a>
             </iron-selector>
             <!-- Iron Selecctor End -->
           </app-drawer>
@@ -189,7 +189,7 @@ class HealthCare extends PolymerElement{
       } else if (['login', 'home', 'services', 'doctors', 'appoinment','appoinmentview'].indexOf(page) !== -1) {
           this.page = page;
       } else {
-          this.page = 'home';
+          this.page = 'login';
       }
 
       // Close a non-persistent drawer when the page & route are changed.

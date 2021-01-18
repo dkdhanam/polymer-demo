@@ -230,7 +230,7 @@ $_documentContainer.innerHTML = `<dom-module id="shared-styles">
 
     @media screen and (min-width:767px) and (max-width: 1024px){
       :host {
-        --app-grid-columns: 2;
+        --app-grid-columns: 2 !important;
       }
       .logo-main a{
         margin-left: 15px;
@@ -242,6 +242,9 @@ $_documentContainer.innerHTML = `<dom-module id="shared-styles">
       :host {
         --app-grid-columns: 1;
       }
+      .home-content{
+        display: none;
+      }
       .mobile-logo{
         text-align: center;
         display: inline-block;
@@ -249,6 +252,9 @@ $_documentContainer.innerHTML = `<dom-module id="shared-styles">
         margin-top: 15px;
         position: absolute;
         
+      }
+      paper-icon-button{
+        margin-top:12px;
       }
       .mobile-logo a{
         font-size: 30px;
@@ -272,6 +278,8 @@ $_documentContainer.innerHTML = `<dom-module id="shared-styles">
       }
       .drawer-list a {
         color: var(--app-white-color);
+        text-align: center;
+        line-height: 30px;
       }
       #mylogin paper-card{
         width:80%;
